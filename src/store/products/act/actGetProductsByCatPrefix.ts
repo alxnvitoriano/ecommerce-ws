@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { typeCategory } from "@customTypes/category";
+import { typeProduct } from "@customTypes/product";
 
-type responseType = typeCategory[];
+type responseType = typeProduct[];
 
 const actGetProductsByCatPrefix = createAsyncThunk(
-  "produtos/actGetProductsByCatPrefix",
-  async (prefix, thunkAPI) => {
+  "products/actGetProductsByCatPrefix",
+  async (prefix: string, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const response = await axios.get<responseType>(

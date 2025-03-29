@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actGetProductsByCatPrefix from "./act/actGetProductsByCatPrefix";
 import { typeLoading } from "@customTypes/shared";
-import { typeCategory } from "@customTypes/category";
+import { typeProduct } from "@customTypes/product";
 
 interface categoriesState {
-  records: typeCategory[];
+  records: typeProduct[];
   loading: typeLoading;
   error: string | null;
 }
@@ -16,7 +16,7 @@ const initialState: categoriesState = {
 };
 
 const productsSlice = createSlice({
-  name: "categorias",
+  name: "products",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
