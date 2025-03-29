@@ -9,7 +9,7 @@ const Product = ({ title, price, img }: typeProduct) => {
       <div className={productImg}>
         <img src={img} alt={title} />
       </div>
-      <h3>{title}</h3>
+      <h2>{title}</h2>
       <h2>R$ {price}</h2>
       <Button variant="info" style={{ color: "white" }}>
         Add to cart
