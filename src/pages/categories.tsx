@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { actGetCategories } from "@store/categories/categoriesSlice";
+import { Container } from "react-bootstrap";
+import { GridList } from "@components/common";
 import { Category } from "../components/ecommerce";
-import { Container, Row, Col } from "react-bootstrap";
 import { Loading } from "@components/feedback";
 
 const Categories = () => {
@@ -17,23 +18,13 @@ const Categories = () => {
     }
   }, [dispatch, records]);
 
-  const categoriesList =
-    records.length > 0
-      ? records.map((record) => (
-          <Col
-            xs={3}
-            key={record.id}
-            className="d-flex justify-content-center mb-5 mt-2"
-          >
-            <Category {...record} />
-          </Col>
-        ))
-      : "esta categoria não existe.";
-
   return (
     <Container>
       <Loading status={loading} error={error}>
-        <Row>{categoriesList}</Row>
+        <GridList
+          records={records}
+          renderItem={(record) => <Category {...record} />}
+        />
       </Loading>
     </Container>
   );
