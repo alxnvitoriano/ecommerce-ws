@@ -7,6 +7,7 @@ import {
 } from "../store/products/productsSlice";
 import { Container, Row, Col } from "react-bootstrap";
 import { Product } from "../components/ecommerce";
+import { Loading } from "@components/feedback";
 
 const Products = () => {
   const params = useParams();
@@ -31,11 +32,13 @@ const Products = () => {
             <Product {...record} />
           </Col>
         ))
-      : "esta categoria não existe";
+      : "Esta categoria não existe";
 
   return (
     <Container>
-      <Row>{productsList}</Row>
+      <Loading status={loading} error={error}>
+        <Row>{productsList}</Row>
+      </Loading>
     </Container>
   );
 };
