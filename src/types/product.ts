@@ -4,4 +4,5 @@ export type typeProduct = {
   cat_prefix: string;
   img: string;
   price: string;
+  quantity?: number;
 };
