@@ -26,5 +26,16 @@ const cartSlice = createSlice({
   },
 });
 
+const getCartTotalQuantity = (state) => {
+  const totalQuantity = Object.values(state.cart.items).reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue;
+    },
+    0
+  );
+  return totalQuantity;
+};
+
+export { getCartTotalQuantity };
 export const { addToCart } = cartSlice.actions;
 export default cartSlice.reducer;
