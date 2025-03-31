@@ -5,7 +5,8 @@ import {
   actGetProductsByCatPrefix,
   productsCleanUp,
 } from "../store/products/productsSlice";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import { GridList } from "@components/common";
 import { Product } from "../components/ecommerce";
 import { Loading } from "@components/feedback";
 
@@ -21,23 +22,13 @@ const Products = () => {
     };
   }, [dispatch, params]);
 
-  const productsList =
-    records.length > 0
-      ? records.map((record) => (
-          <Col
-            xs={3}
-            key={record.id}
-            className="d-flex justify-content-center mb-5 mt-2"
-          >
-            <Product {...record} />
-          </Col>
-        ))
-      : "Esta categoria não existe";
-
   return (
     <Container>
       <Loading status={loading} error={error}>
-        <Row>{productsList}</Row>
+        <GridList
+          records={records}
+          renderItem={(record) => <Product {...record} />}
+        />
       </Loading>
     </Container>
   );
