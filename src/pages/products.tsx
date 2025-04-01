@@ -5,7 +5,7 @@ import {
   actGetProductsByCatPrefix,
   productsCleanUp,
 } from "../store/products/productsSlice";
-import { GridList, Haeding } from "@components/common";
+import { GridList, Heading } from "@components/common";
 import { Product } from "../components/ecommerce";
 import { Loading } from "@components/feedback";
 
@@ -29,7 +29,7 @@ const Products = () => {
 
   return (
     <>
-      <Haeding>Produtos</Haeding>
+      <Heading>Produtos</Heading>
       <Loading status={loading} error={error}>
         <GridList
           records={productsFullInfo}

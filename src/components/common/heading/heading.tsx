@@ -1,4 +1,4 @@
-const Haeding = ({ children }: { children: React.ReactNode }) => {
+const Heading = ({ children }: { children: React.ReactNode }) => {
   return (
     <h2 className="mb-3" style={{ fontSize: "26px" }}>
       {children}
@@ -6,4 +6,4 @@ const Haeding = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Haeding;
+export default Heading;

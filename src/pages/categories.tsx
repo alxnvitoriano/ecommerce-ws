@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { actGetCategories } from "@store/categories/categoriesSlice";
-import { GridList, Haeding } from "@components/common";
+import { GridList, Heading } from "@components/common";
 import { Category } from "../components/ecommerce";
 import { Loading } from "@components/feedback";
 
@@ -19,7 +19,7 @@ const Categories = () => {
 
   return (
     <>
-      <Haeding>Categorias</Haeding>
+      <Heading>Categorias</Heading>
       <Loading status={loading} error={error}>
         <GridList
           records={records}
