@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { actGetCategories } from "@store/categories/categoriesSlice";
-import { Container } from "react-bootstrap";
-import { GridList } from "@components/common";
+import { GridList, Haeding } from "@components/common";
 import { Category } from "../components/ecommerce";
 import { Loading } from "@components/feedback";
 
@@ -19,14 +18,15 @@ const Categories = () => {
   }, [dispatch, records]);
 
   return (
-    <Container>
+    <>
+      <Haeding>Categorias</Haeding>
       <Loading status={loading} error={error}>
         <GridList
           records={records}
           renderItem={(record) => <Category {...record} />}
         />
       </Loading>
-    </Container>
+    </>
   );
 };
 

@@ -1,56 +1,65 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useAppDispatch } from "@store/hooks";
 import { addToCart } from "@store/cart/cartSlice";
 import { Button, Spinner } from "react-bootstrap";
-import styles from "./styles.module.css";
 import { typeProduct } from "@customTypes/product";
-const { product, productImg } = styles;
 
-const Product = ({ id, title, price, img }: typeProduct) => {
-  const dispatch = useAppDispatch();
+import styles from "./styles.module.css";
+const { product, productImg, maximumNotice } = styles;
 
-  const [isBtnClicked, setIsBtnClicked] = useState(0);
-  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+const Product = memo(
+  ({ id, title, price, img, max, quantity }: typeProduct) => {
+    const dispatch = useAppDispatch();
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
-  useEffect(() => {
-    if (!isBtnClicked) {
-      return;
-    }
-    setIsBtnDisabled(true);
-    const debounce = setTimeout(() => {
-      setIsBtnDisabled(false);
-    }, 300);
+    const currentRemainingQuantity = max - (quantity ?? 0);
+    const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
 
-    return () => clearTimeout(debounce);
-  }, [isBtnClicked]);
+    useEffect(() => {
+      if (!isBtnDisabled) {
+        return;
+      }
 
-  const addToCartHandler = () => {
-    dispatch(addToCart(id));
-    setIsBtnClicked((prev) => prev + 1);
-  };
-  return (
-    <div className={product}>
-      <div className={productImg}>
-        <img src={img} alt={title} />
+      const debounce = setTimeout(() => {
+        setIsBtnDisabled(false);
+      }, 300);
+
+      return () => clearTimeout(debounce);
+    }, [isBtnDisabled]);
+
+    const addToCartHandler = () => {
+      dispatch(addToCart(id));
+      setIsBtnDisabled(true);
+    };
+    return (
+      <div className={product}>
+        <div className={productImg}>
+          <img src={img} alt={title} />
+        </div>
+        <h2>{title}</h2>
+        <h2>R$ {price.toFixed(2)}</h2>
+        <p className={maximumNotice}>
+          {quantityReachedToMax
+            ? "Você atinge o limite."
+            : `Você pode adicionar ${currentRemainingQuantity} item(s)`}
+        </p>
+        <Button
+          variant="info"
+          style={{ color: "white" }}
+          onClick={addToCartHandler}
+          disabled={isBtnDisabled || quantityReachedToMax}
+        >
+          {isBtnDisabled ? (
+            <>
+              <Spinner animation="border" size="sm" /> Loading...
+            </>
+          ) : (
+            "Add to cart"
+          )}
+        </Button>
       </div>
-      <h2>{title}</h2>
-      <h2>R$ {price}</h2>
-      <Button
-        variant="info"
-        style={{ color: "white" }}
-        onClick={addToCartHandler}
-        disabled={isBtnDisabled}
-      >
-        {isBtnDisabled ? (
-          <>
-            <Spinner animation="border" size="sm" /> Loading...
-          </>
-        ) : (
-          "Add to cart"
-        )}
-      </Button>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default Product;
