@@ -15,7 +15,7 @@ const CartItem = () => {
           />
         </div>
         <div className={productInfo}>
-          <h2>test</h2>
+          <h2>teste</h2>
           <h3>R$ 20</h3>
           <Button
             variant="secondary"

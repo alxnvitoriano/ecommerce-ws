@@ -1,19 +1,19 @@
 import { typeLoading } from "@customTypes/shared";
 
 type loadingProps = {
-  status: typeLoading;
+  loading: typeLoading;
   error: null | string;
   children: React.ReactNode;
 };
 
-const Loading = ({ status, error, children }: loadingProps) => {
-  if (status === "pending") {
+const Loading = ({ loading, error, children }: loadingProps) => {
+  if (loading === "pending") {
     return <p>Carregando, por favor aguarde...</p>;
   }
-  if (status === "failed") {
-    return <p>{error}</p>;
+  if (loading === "failed") {
+    return <div>{error}</div>;
   }
-  return <>{children}</>;
+  return <div>{children}</div>;
 };
 
 export default Loading;
