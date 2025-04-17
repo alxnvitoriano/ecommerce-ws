@@ -28,8 +28,10 @@ const HeaderWishlist = () => {
   return (
     <div className={container} onClick={() => navigate("/cart")}>
       <div className={iconWrapper}>
-        <Logo title="cart icon" />
-        <div className={quantityStyle}>{totalQuantity}</div>
+        <Logo title="basket icon" />
+        {totalQuantity > 0 && (
+          <div className={quantityStyle}>{totalQuantity}</div>
+        )}
       </div>
       <h3>Lista de Desejos</h3>
     </div>
