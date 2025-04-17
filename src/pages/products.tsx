@@ -8,18 +8,12 @@ import {
 import { GridList, Heading } from "@components/common";
 import { Product } from "../components/ecommerce";
 import { Loading } from "@components/feedback";
+import { typeProduct } from "@customTypes/product";
 
 const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { loading, error, records } = useAppSelector((state) => state.products);
-  const cartItems = useAppSelector((state) => state.cart.items);
-
-  const productsFullInfo = records.map((el) => ({
-    ...el,
-    quantity: cartItems[el.id] || 0,
-  }));
-
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
     return () => {
@@ -29,10 +23,10 @@ const Products = () => {
 
   return (
     <>
-      <Heading>Produtos</Heading>
+      <Heading>{params.prefix?.toUpperCase()} Produtos</Heading>
       <Loading status={loading} error={error}>
-        <GridList
-          records={productsFullInfo}
+        <GridList<typeProduct>
+          records={records}
           renderItem={(record) => <Product {...record} />}
         />
       </Loading>

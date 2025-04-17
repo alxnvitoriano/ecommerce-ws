@@ -12,7 +12,7 @@ const actGetProductsByItems = createAsyncThunk(
     const { cart } = getState() as RootState;
     const itemsId = Object.keys(cart.items);
 
-    if (itemsId.length) {
+    if (!itemsId.length) {
       return fulfillWithValue([]);
     }
 

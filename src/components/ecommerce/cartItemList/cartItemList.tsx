@@ -1,10 +1,26 @@
 import CartItem from "../cartItem/cartItem";
 import { typeProduct } from "@customTypes/product";
 
-type cartItemListProps = { products: typeProduct[] };
+type CartItemListProps = {
+  products: typeProduct[];
+  changeQuantityHandler: (id: number, quantity: number) => void;
+  removeItemHandler: (id: number) => void;
+};
 
-const CartItemList = ({ products }: cartItemListProps) => {
-  const renderList = products.map((el) => <CartItem key={el.id} {...el} />);
+const CartItemList = ({
+  products,
+  changeQuantityHandler,
+  removeItemHandler,
+}: CartItemListProps) => {
+  const renderList = products.map((el) => (
+    <CartItem
+      key={el.id}
+      {...el}
+      changeQuantityHandler={changeQuantityHandler}
+      removeItemHandler={removeItemHandler}
+    />
+  ));
+
   return <div>{renderList}</div>;
 };
 

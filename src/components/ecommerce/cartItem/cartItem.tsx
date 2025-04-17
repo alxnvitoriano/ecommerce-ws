@@ -1,42 +1,73 @@
-import styles from "./styles.module.css";
+import { memo } from "react";
 import { Form, Button } from "react-bootstrap";
+import { typeProduct } from "@customTypes/product";
+import styles from "./styles.module.css";
 
 const { cartItem, product, productImg, productInfo, cartItemSelection } =
   styles;
 
-const CartItem = () => {
-  return (
-    <div className={cartItem}>
-      <div className={product}>
-        <div className={productImg}>
-          <img
-            src="https://lojavivara.vtexassets.com/arquivos/ids/758184-1600-1600/Corrente-Calvin-Klein-Feminina-em-Aco-Prateado-35000338-79445_1_set.jpg?v=638437309945000000"
-            alt="title"
-          />
-        </div>
-        <div className={productInfo}>
-          <h2>teste</h2>
-          <h3>R$ 20</h3>
-          <Button
-            variant="secondary"
-            style={{ color: "white", width: "100px" }}
-            className="mt-auto"
-          >
-            Remover
-          </Button>
-        </div>
-      </div>
-
-      <div className={cartItemSelection}>
-        <span className="d-block mb-1">Quantidade</span>
-        <Form.Select aria-label="Default select example">
-          <option value="1"> 1</option>
-          <option value="2"> 2</option>
-          <option value="3"> 3</option>
-        </Form.Select>
-      </div>
-    </div>
-  );
+type cartItemProps = typeProduct & {
+  changeQuantityHandler: (id: number, quantity: number) => void;
+  removeItemHandler: (id: number) => void;
 };
+
+const CartItem = memo(
+  ({
+    id,
+    title,
+    img,
+    price,
+    max,
+    quantity,
+    changeQuantityHandler,
+    removeItemHandler,
+  }: cartItemProps) => {
+    // renderizar opcoes da lista
+    const renderOptions = Array(max)
+      .fill(0)
+      .map((_, idx) => {
+        const quantity = ++idx;
+        return (
+          <option value={quantity} key={quantity}>
+            {quantity}
+          </option>
+        );
+      });
+
+    const changeQuantity = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const quantity = +event.target.value;
+      changeQuantityHandler(id, quantity);
+    };
+
+    return (
+      <div className={cartItem}>
+        <div className={product}>
+          <div className={productImg}>
+            <img src={img} alt={title} />
+          </div>
+          <div className={productInfo}>
+            <h2>{title}</h2>
+            <h3>R$ {price.toFixed(2)} </h3>
+            <Button
+              variant="secondary"
+              style={{ color: "white", width: "100px" }}
+              className="mt-auto"
+              onClick={() => removeItemHandler(id)}
+            >
+              Remove
+            </Button>
+          </div>
+        </div>
+
+        <div className={cartItemSelection}>
+          <span className="d-block mb-1">Quantidade</span>
+          <Form.Select value={quantity} onChange={changeQuantity}>
+            {renderOptions}
+          </Form.Select>
+        </div>
+      </div>
+    );
+  }
+);
 
 export default CartItem;
