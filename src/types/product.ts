@@ -6,4 +6,5 @@ export type typeProduct = {
   img: string;
   quantity?: number;
   max: number;
+  isLiked?: boolean;
 };

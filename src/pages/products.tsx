@@ -14,6 +14,9 @@ const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { loading, error, records } = useAppSelector((state) => state.products);
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const wishlistItemsId = useAppSelector((state) => state.wishlist.itemsId);
+
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
     return () => {
@@ -21,12 +24,18 @@ const Products = () => {
     };
   }, [dispatch, params]);
 
+  const productsFullInfo = records.map((el) => ({
+    ...el,
+    quantity: cartItems[el.id],
+    isLiked: wishlistItemsId.includes(el.id),
+  }));
+
   return (
     <>
       <Heading>{params.prefix?.toUpperCase()} </Heading>
       <Loading status={loading} error={error}>
         <GridList<typeProduct>
-          records={records}
+          records={productsFullInfo}
           renderItem={(record) => <Product {...record} />}
         />
       </Loading>
