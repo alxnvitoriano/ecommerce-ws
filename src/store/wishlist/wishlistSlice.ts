@@ -16,7 +16,7 @@ const wishlistSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(actLikeToggle.pending, (state) => {
-      state.error;
+      state.error = null;
     });
     builder.addCase(actLikeToggle.fulfilled, (state, action) => {
       if (action.payload.type === "add") {
