@@ -5,13 +5,11 @@ type GridListProps<T> = {
   renderItem: (record: T) => React.ReactNode;
 };
 
-type hasId = { id?: number };
-
-const GridList = <T extends hasId>({
+const GridList = <T extends { id?: number }>({
   records,
   renderItem,
 }: GridListProps<T>) => {
-  const categoriesList =
+  const renderList =
     records.length > 0
       ? records.map((record) => (
           <Col
@@ -24,7 +22,7 @@ const GridList = <T extends hasId>({
         ))
       : "esta categoria não existe.";
 
-  return <Row>{categoriesList}</Row>;
+  return <Row>{renderList}</Row>;
 };
 
 export default GridList;

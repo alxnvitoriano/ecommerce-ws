@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actLikeToggle from "./act/actLikeToggle";
-import actGetWishList from "./act/actGetWishList";
+import actGetWishlist from "./act/actGetWishList";
 import { typeLoading } from "@customTypes/shared";
 import { typeProduct } from "@customTypes/product";
-
 interface IWishlist {
   itemsId: number[];
   productsFullInfo: typeProduct[];
@@ -17,10 +16,15 @@ const initialState: IWishlist = {
   error: null,
   loading: "idle",
 };
+
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
-  reducers: {},
+  reducers: {
+    productsFullInfoCleanUp: (state) => {
+      state.productsFullInfo = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(actLikeToggle.pending, (state) => {
       state.error = null;
@@ -30,6 +34,9 @@ const wishlistSlice = createSlice({
         state.itemsId.push(action.payload.id);
       } else {
         state.itemsId = state.itemsId.filter((el) => el !== action.payload.id);
+        state.productsFullInfo = state.productsFullInfo.filter(
+          (el) => el.id !== action.payload.id
+        );
       }
     });
     builder.addCase(actLikeToggle.rejected, (state, action) => {
@@ -37,17 +44,16 @@ const wishlistSlice = createSlice({
         state.error = action.payload;
       }
     });
-
-    //adicionar items a lista de desejos
-    builder.addCase(actGetWishList.pending, (state) => {
+    // get wishlist items
+    builder.addCase(actGetWishlist.pending, (state) => {
       state.loading = "pending";
       state.error = null;
     });
-    builder.addCase(actGetWishList.fulfilled, (state, action) => {
+    builder.addCase(actGetWishlist.fulfilled, (state, action) => {
       state.loading = "succeeded";
       state.productsFullInfo = action.payload;
     });
-    builder.addCase(actGetWishList.rejected, (state, action) => {
+    builder.addCase(actGetWishlist.rejected, (state, action) => {
       state.loading = "failed";
       if (action.payload && typeof action.payload === "string") {
         state.error = action.payload;
@@ -56,5 +62,6 @@ const wishlistSlice = createSlice({
   },
 });
 
-export { actLikeToggle, actGetWishList };
+export { actLikeToggle, actGetWishlist };
+export const { productsFullInfoCleanUp } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

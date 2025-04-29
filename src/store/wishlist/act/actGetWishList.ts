@@ -22,7 +22,7 @@ const actGetWishList = createAsyncThunk(
         .join("&");
 
       const response = await axios.get<typeResponse>(
-        `/products?=${concatenatedItemsId}`
+        `/products?${concatenatedItemsId}`
       );
 
       return response.data;

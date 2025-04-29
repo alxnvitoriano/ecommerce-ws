@@ -20,7 +20,7 @@ const Categories = () => {
   return (
     <>
       <Heading>Categorias</Heading>
-      <Loading loading={loading} error={error}>
+      <Loading status={loading} error={error}>
         <GridList
           records={records}
           renderItem={(record) => <Category {...record} />}

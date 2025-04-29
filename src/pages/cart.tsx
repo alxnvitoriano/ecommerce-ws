@@ -17,7 +17,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(actGetProductsByItems());
-  }, [dispatch]);
+  }, [dispatch, items]);
 
   const products = productsFullInfo.map((el) => ({
     ...el,
