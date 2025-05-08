@@ -23,7 +23,7 @@ const Categories = () => {
 
   return (
     <>
-      <Heading>Categorias</Heading>
+      <Heading title="Categorias" />
       <Loading status={loading} error={error}>
         <GridList
           records={records}
