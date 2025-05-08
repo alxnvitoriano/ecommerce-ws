@@ -1,11 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actGetProductsByItems from "./act/actGetProductsByItems";
-import {
-  getCartTotalQuantitySelector,
-  itemQuantityAvailabilityCheckingSelector,
-} from "./selectors";
+import { getCartTotalQuantitySelector } from "./selectors";
 import { typeProduct } from "@customTypes/product";
 import { typeLoading } from "@customTypes/shared";
+// import { productsFullInfoCleanUp } from "@store/wishlist/wishlistSlice";
 
 interface cartState {
   items: { [key: string]: number };
@@ -42,6 +40,9 @@ const cartSlice = createSlice({
         (el) => el.id !== action.payload
       );
     },
+    cleanCartProductsFullInfo: (state) => {
+      state.productsFullInfo = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(actGetProductsByItems.pending, (state) => {
@@ -61,11 +62,11 @@ const cartSlice = createSlice({
   },
 });
 
-export {
-  getCartTotalQuantitySelector,
-  itemQuantityAvailabilityCheckingSelector,
-  actGetProductsByItems,
-};
-export const { addToCart, cartItemChangeQuantity, cartItemRemove } =
-  cartSlice.actions;
+export { getCartTotalQuantitySelector, actGetProductsByItems };
+export const {
+  addToCart,
+  cartItemChangeQuantity,
+  cartItemRemove,
+  cleanCartProductsFullInfo,
+} = cartSlice.actions;
 export default cartSlice.reducer;
