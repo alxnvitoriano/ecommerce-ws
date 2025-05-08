@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useAppDispatch } from "@store/hooks";
 import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 import { addToCart } from "@store/cart/cartSlice";
@@ -10,69 +10,71 @@ import { typeProduct } from "@customTypes/product";
 import styles from "./styles.module.css";
 const { product, productImg, maximumNotice, wishlistBtn } = styles;
 
-const Product = ({ id, title, price, img, max, quantity }: typeProduct) => {
-  const dispatch = useAppDispatch();
-  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const currentRemainingQuantity = max - (quantity ?? 0);
-  const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
+const Product = memo(
+  ({ id, title, price, img, max, quantity }: typeProduct) => {
+    const dispatch = useAppDispatch();
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const currentRemainingQuantity = max - (quantity ?? 0);
+    const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
 
-  useEffect(() => {
-    if (!isBtnDisabled) {
-      return;
-    }
+    useEffect(() => {
+      if (!isBtnDisabled) {
+        return;
+      }
 
-    const debounce = setTimeout(() => {
-      setIsBtnDisabled(false);
-    }, 300);
+      const debounce = setTimeout(() => {
+        setIsBtnDisabled(false);
+      }, 300);
 
-    return () => clearTimeout(debounce);
-  }, [isBtnDisabled]);
+      return () => clearTimeout(debounce);
+    }, [isBtnDisabled]);
 
-  const addToCartHandler = () => {
-    dispatch(addToCart(id));
-    setIsBtnDisabled(true);
-  };
+    const addToCartHandler = () => {
+      dispatch(addToCart(id));
+      setIsBtnDisabled(true);
+    };
 
-  const LikeToggleHandler = () => {
-    if (isLoading) {
-      setIsLoading(true);
-      dispatch(actLikeToggle(id))
-        .unwrap()
-        .then(() => setIsLoading(false))
-        .catch(() => setIsLoading(false));
-    }
-  };
+    const LikeToggleHandler = () => {
+      if (isLoading) {
+        setIsLoading(true);
+        dispatch(actLikeToggle(id))
+          .unwrap()
+          .then(() => setIsLoading(false))
+          .catch(() => setIsLoading(false));
+      }
+    };
 
-  return (
-    <div className={product}>
-      <div className={wishlistBtn} onClick={LikeToggleHandler}></div>
-      <div className={productImg}>
-        <img src={img} alt={title} />
+    return (
+      <div className={product}>
+        <div className={wishlistBtn} onClick={LikeToggleHandler}></div>
+        <div className={productImg}>
+          <img src={img} alt={title} />
+        </div>
+        <h2>{title}</h2>
+        <h2>R$ {price.toFixed(2)}</h2>
+        <p className={maximumNotice}>
+          {quantityReachedToMax
+            ? "Você atinge o limite."
+            : `Você pode adicionar ${currentRemainingQuantity} item(s)`}
+        </p>
+        <Button
+          variant="info"
+          style={{ color: "white" }}
+          onClick={addToCartHandler}
+          disabled={isBtnDisabled || quantityReachedToMax}
+        >
+          {isBtnDisabled ? (
+            <>
+              <Spinner animation="border" size="sm" /> Loading...
+            </>
+          ) : (
+            "Add to cart"
+          )}
+        </Button>
       </div>
-      <h2>{title}</h2>
-      <h2>R$ {price.toFixed(2)}</h2>
-      <p className={maximumNotice}>
-        {quantityReachedToMax
-          ? "Você atinge o limite."
-          : `Você pode adicionar ${currentRemainingQuantity} item(s)`}
-      </p>
-      <Button
-        variant="info"
-        style={{ color: "white" }}
-        onClick={addToCartHandler}
-        disabled={isBtnDisabled || quantityReachedToMax}
-      >
-        {isBtnDisabled ? (
-          <>
-            <Spinner animation="border" size="sm" /> Loading...
-          </>
-        ) : (
-          "Add to cart"
-        )}
-      </Button>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default Product;
