@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 ///layout
-const MainLayout = lazy(() => import("@layouts/MainLayout/MainLayout"));
+const MainLayout = lazy(() => import("../layouts/MainLayout/MainLayout"));
 //pages
 const Home = lazy(() => import("@pages/home"));
 const Wishlist = lazy(() => import("@pages/wishlist"));
-const Categories = lazy(() => import("@pages/cart"));
+const Categories = lazy(() => import("@pages/categories"));
 const Cart = lazy(() => import("@pages/cart"));
 const Products = lazy(() => import("@pages/products"));
 const AboutUs = lazy(() => import("@pages/aboutUs"));
