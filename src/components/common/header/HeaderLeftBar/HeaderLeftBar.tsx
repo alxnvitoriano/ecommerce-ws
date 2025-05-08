@@ -13,7 +13,7 @@ const HeaderLeftBar = () => {
     <div className={headerLeftBar}>
       {/* <HeaderWishlist /> */}
       <HeaderCounter
-        to="carrinho"
+        to="cart"
         title="Carrinho"
         totalQuantity={cartTotalQuantity}
         svgIcon={<CartIcon title="carrinho" />}
