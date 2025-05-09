@@ -1,4 +1,4 @@
-import { typeCategory } from "@customTypes/category";
+import { typeCategory } from "@types";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 const { category, categoryImg, categoryTitle } = styles;

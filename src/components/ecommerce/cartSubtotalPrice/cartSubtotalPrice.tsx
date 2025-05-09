@@ -1,4 +1,4 @@
-import { typeProduct } from "@customTypes/product";
+import { typeProduct } from "@types";
 import style from "./styles.module.css";
 
 type CartSubtotalPriceProps = { products: typeProduct[] };

@@ -1,4 +1,4 @@
-import { typeLoading } from "@customTypes/shared";
+import { typeLoading } from "@types";
 
 type loadingProps = {
   status: typeLoading;

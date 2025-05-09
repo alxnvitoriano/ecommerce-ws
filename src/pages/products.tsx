@@ -2,7 +2,7 @@ import useProducts from "@hooks/useProducts";
 import { GridList, Heading } from "@components/common";
 import { Product } from "../components/ecommerce";
 import { Loading } from "@components/feedback";
-import { typeProduct } from "@customTypes/product";
+import { typeProduct } from "@types";
 
 const Products = () => {
   const { loading, error, productPrefix, productsFullInfo } = useProducts();

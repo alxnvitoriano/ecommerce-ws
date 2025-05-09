@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { typeCategory } from "@customTypes/category";
+import { typeCategory } from "@types";
 import { axiosErrorHandler } from "@utils";
 
 type responseType = typeCategory[];

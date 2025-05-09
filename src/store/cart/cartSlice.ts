@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actGetProductsByItems from "./act/actGetProductsByItems";
 import { getCartTotalQuantitySelector } from "./selectors";
-import { typeProduct } from "@customTypes/product";
-import { typeLoading } from "@customTypes/shared";
+import { typeLoading, typeProduct } from "@types";
 // import { productsFullInfoCleanUp } from "@store/wishlist/wishlistSlice";
 
 interface cartState {
